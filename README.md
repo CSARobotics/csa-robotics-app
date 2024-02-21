@@ -1,6 +1,10 @@
 kurulumlar
+
+<br>
 npm install --save @fortawesome/fontawesome-svg-core @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
+<br>
 npm install react-router-dom
+<br>
 npm install @babel/plugin-proposal-private-property-in-object --save-dev
 
 
