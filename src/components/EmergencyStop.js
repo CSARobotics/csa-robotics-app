@@ -1,11 +1,13 @@
 import React from 'react';
+import SendMessage from '../services/RosPublisher';
 
 
 const EmergencyStop = () => {
    
     const handleEmergencyStop = () => {
+    SendMessage('/power_down', 'std_msgs/String', 'power_down');
     console.log('Acil Stop Aktif!');
-    // ros ile iletişim burada kurulacak
+    
     };
       
   return (

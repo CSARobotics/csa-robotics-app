@@ -1,13 +1,12 @@
 import React from 'react';
 import LineBox from '../components/LineBox';
+import { RosComponent } from '../services/RosConnection';
 
 const Dashboard = () => {
-  // gerçek uygulamada bu veriler cihazdan alınacak
-  const data = {
-    temperature: 24, // Sıcaklık
-    humidity: 50,    // Nem
-    battery: 75,     // Batarya yüzdesi
-  };
+
+  const batteryData = RosComponent('/battery', 'std_msgs/String');
+  const temperatureData = RosComponent('/temperature', 'std_msgs/String');
+  const humidityData = RosComponent('/humidity', 'std_msgs/String');
 
   return (
     <div style={{
@@ -21,11 +20,10 @@ const Dashboard = () => {
   
     }}>
       
-      <LineBox title="Temperature" value={data.temperature} unit="°C" />
-      <LineBox title="Humidity" value={data.humidity} unit="%" />
-      <LineBox title="Battery" value={data.battery} unit="%" />
-      <LineBox title="Humidity" value={data.humidity} unit="%" />
-      <LineBox title="Battery" value={data.battery} unit="%" />
+      <LineBox title="Temperature" value={temperatureData?.data || 'Loading ... '} unit="°C" />
+      <LineBox title="Humidity" value={humidityData?.data || 'Loading ...'} unit="%" />
+      <LineBox title="Battery" value={batteryData?.data || 'LOading...'} unit="%" />
+
       
     </div>
   );

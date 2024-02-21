@@ -1,8 +1,9 @@
-import { useEffect} from 'react';
+import { useEffect, useState} from 'react';
 import ROSLIB from 'roslib';
 
-export const RosComponent = (setMessage, setConnectionStatus) => {
-  
+export const RosComponent = (msgTopic, messageType) => {
+  const [data, setData] = useState(null);
+
   useEffect(() => {
     // ROS Bridge bağlantısı kurulur
     const ros = new ROSLIB.Ros({
@@ -11,42 +12,41 @@ export const RosComponent = (setMessage, setConnectionStatus) => {
 
     ros.on('connection', () => {
       console.log('connected');
-      setConnectionStatus('connected');
+      //setConnectionStatus('connected');
      
     });
 
     ros.on('error', (error) => {
       console.log('connection error', error);
-      setConnectionStatus('connection error');
+      //setConnectionStatus('connection error');
       
     });
 
     ros.on('close', () => {
       console.log('Closed');
-      setConnectionStatus('closed');
+      //setConnectionStatus('closed');
      
       
     });
 
   
-    const listener = new ROSLIB.Topic({
+    const connect = new ROSLIB.Topic({
       ros,
-      name: '/listener', // ROS konu adı
-      messageType: 'std_msgs/String' // Konu mesaj tipi
+      name: msgTopic,
+      messageType: messageType,
     });
 
-    listener.subscribe((message) => {
-      setMessage(message.data);
+    connect.subscribe((message) => {
+      setData(message);
      
     });
 
 
     return () => {
-      listener.unsubscribe();
+      connect.unsubscribe();
     };
-  }, [setMessage, setConnectionStatus]);
+  }, [msgTopic, messageType]);
 
-
-
+  return data;
 };
 
