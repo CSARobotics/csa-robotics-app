@@ -3,6 +3,7 @@ import ROSLIB from 'roslib';
 
 export const RosComponent = (msgTopic, messageType) => {
   const [data, setData] = useState(null);
+  const [connectionStatus, setConnectionStatus] = useState('disconnected');
 
   useEffect(() => {
     // ROS Bridge bağlantısı kurulur
@@ -12,19 +13,19 @@ export const RosComponent = (msgTopic, messageType) => {
 
     ros.on('connection', () => {
       console.log('connected');
-      //setConnectionStatus('connected');
+      setConnectionStatus('connected');
      
     });
 
     ros.on('error', (error) => {
       console.log('connection error', error);
-      //setConnectionStatus('connection error');
+      setConnectionStatus('connection error');
       
     });
 
     ros.on('close', () => {
       console.log('Closed');
-      //setConnectionStatus('closed');
+      setConnectionStatus('closed');
      
       
     });
@@ -47,6 +48,6 @@ export const RosComponent = (msgTopic, messageType) => {
     };
   }, [msgTopic, messageType]);
 
-  return data;
+  return {data, connectionStatus};
 };
 

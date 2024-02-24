@@ -4,15 +4,14 @@ import { RosComponent } from '../services/RosConnection';
 
 const Dashboard = () => {
 
-  const batteryData = RosComponent('/battery', 'battery_creator/Battery');
-  const temperatureData = RosComponent('/temperature', 'std_msgs/String');
-  const humidityData = RosComponent('/humidity', 'std_msgs/String');
+  const { data: batteryData,} = RosComponent('/battery', 'battery_creator/Battery');
+  const {data : temperatureData,} = RosComponent('/tempeture', 'tempeture_creator/Tempeture');
+
 
   return (
     <div style={{
       color: 'white',
       padding: '10px',
-    
       display : 'flex',
       justifyContent: 'right',
       
@@ -20,9 +19,9 @@ const Dashboard = () => {
   
     }}>
       
-      <LineBox title="Temperature" value={temperatureData?.data || 'Loading ... '} unit="°C" />
-      <LineBox title="Humidity" value={humidityData?.data || 'Loading ...'} unit="%" />
-      <LineBox title="Battery" value={batteryData?.battery || 'LOading...'} unit="%" />
+      <LineBox title="Temperature"  value={temperatureData ? `${temperatureData.tempeture}` : 'Loading ...'} unit="°C" />
+      <LineBox title="Humidity" value={temperatureData ? `${temperatureData.humidity}` : 'Loading ...'} unit="%" />
+      <LineBox title="Battery" value={batteryData ? `${batteryData.battery}` : 'Loading ...'} unit="%" />
 
       
     </div>

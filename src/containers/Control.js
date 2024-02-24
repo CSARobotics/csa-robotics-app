@@ -5,9 +5,13 @@ import { RosComponent } from '../services/RosConnection';
 const Control = () => {
 
   const [message, setMessage] = useState('');
-  const [connectionStatus, setConnectionStatus] = useState(''); // Bağlantı durumu
+  const [msgType, setMsgType] = useState('');
+  //const [connectionStatus, setConnectionStatus] = useState(''); // Bağlantı durumu
 
-  RosComponent(setMessage,setConnectionStatus);
+  
+  const { data: data, connectionStatus: connectionStatus } = 
+       RosComponent(message, msgType);
+
 
   const [drivingMode, setDrivingMode] = useState(null);
 
@@ -52,7 +56,7 @@ const Control = () => {
 
   if (connectionStatus !== 'connected')
   {
-    return <div className='connection-page'>ROS has not been connected.</div>;
+    return <div className='connection-page'>ROS has not been connected. {connectionStatus}</div>;
   }
 
   return (
