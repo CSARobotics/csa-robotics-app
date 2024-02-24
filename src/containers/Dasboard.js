@@ -4,7 +4,7 @@ import { RosComponent } from '../services/RosConnection';
 
 const Dashboard = () => {
 
-  const batteryData = RosComponent('/battery', 'std_msgs/String');
+  const batteryData = RosComponent('/battery', 'battery_creator/Battery');
   const temperatureData = RosComponent('/temperature', 'std_msgs/String');
   const humidityData = RosComponent('/humidity', 'std_msgs/String');
 
@@ -22,7 +22,7 @@ const Dashboard = () => {
       
       <LineBox title="Temperature" value={temperatureData?.data || 'Loading ... '} unit="°C" />
       <LineBox title="Humidity" value={humidityData?.data || 'Loading ...'} unit="%" />
-      <LineBox title="Battery" value={batteryData?.data || 'LOading...'} unit="%" />
+      <LineBox title="Battery" value={batteryData?.battery || 'LOading...'} unit="%" />
 
       
     </div>
